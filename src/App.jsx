@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Handlebars from 'handlebars';
 
 export default function TemplateParserUI() {
@@ -6,6 +6,7 @@ export default function TemplateParserUI() {
   const [placeholders, setPlaceholders] = useState([]);
   const [formData, setFormData] = useState({});
   const [renderedHtml, setRenderedHtml] = useState('');
+  const [output, setOutput] = useState('');
 
   const extractPlaceholders = (html) => {
     const regex = /{{(\w+)}}/g;
@@ -31,6 +32,7 @@ export default function TemplateParserUI() {
       }, {});
       setFormData(defaultData);
       setRenderedHtml('');
+      setOutput('');
     };
     reader.readAsText(file);
   };
@@ -43,23 +45,21 @@ export default function TemplateParserUI() {
     try {
       const template = Handlebars.compile(htmlTemplate);
       const output = template(formData);
-      setRenderedHtml(output);
-    } catch (err) {
-      console.error('Error rendering template:', err);
-    }
-  };
 
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(renderedHtml);
-      alert('Copied to clipboard!');
+      const beautified = window.prettier.format(output, {
+        parser: "html",
+        plugins: [window.prettierPlugins.html],
+      });
+      console.log({ beautified })
+      setRenderedHtml(beautified);
+      setOutput(output);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Prettier formatting failed:", err);
     }
   };
 
   const downloadHtml = () => {
-    const blob = new Blob([renderedHtml], { type: 'text/html' });
+    const blob = new Blob([output], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'output.html';
@@ -103,12 +103,13 @@ export default function TemplateParserUI() {
 
       {renderedHtml && (
         <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">📄 Rendered HTML</h2>
-          <div className="border p-4 rounded bg-gray-50 whitespace-pre-wrap break-words mb-4">
-            {renderedHtml}
-          </div>
+          <h2 className="text-xl font-semibold mb-2">📄 Rendered HTML (Preview)</h2>
 
-          <div className="flex gap-4">
+          <pre className="border p-4 rounded bg-gray-100 text-sm overflow-auto whitespace-pre-wrap">
+            <code>{renderedHtml}</code>
+          </pre>
+
+          <div className="flex gap-4 mt-4">
             <button onClick={downloadHtml} className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
               Download HTML
             </button>
