@@ -67,7 +67,7 @@ export default function TemplateParserUI() {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto font-sans">
+    <div className="p-6 max-w-3xl mx-auto font-sans" style={{ paddingLeft: '10rem' }}>
       <h1 className="text-2xl font-bold mb-6">🧩 HTML Template Parser UI</h1>
 
       <div className="mb-4">
@@ -95,7 +95,7 @@ export default function TemplateParserUI() {
           <button
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={renderTemplate}
-            style={{ background: '#1348E5' }}
+            style={{ background: '#1348E5', marginTop: '1rem', outline: 'none' }}
           >
             Render Template
           </button>
@@ -111,7 +111,7 @@ export default function TemplateParserUI() {
           </pre>
 
           <div className="flex gap-4 mt-4">
-            <button onClick={downloadHtml} className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700" style={{ background: '#1348E5' }}>
+            <button onClick={downloadHtml} className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700" style={{ background: '#1348E5', outline: 'none' }}>
               Download HTML
             </button>
           </div>
