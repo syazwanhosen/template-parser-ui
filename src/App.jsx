@@ -95,7 +95,7 @@ export default function TemplateParserUI() {
           <button
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={renderTemplate}
-            style={{ background: '#1348E5', marginTop: '1rem', outline: 'none' }}
+            style={{ background: '#1348E5', marginTop: '1rem', outline: 'none', color: 'white' }}
           >
             Render Template
           </button>
@@ -111,7 +111,7 @@ export default function TemplateParserUI() {
           </pre>
 
           <div className="flex gap-4 mt-4">
-            <button onClick={downloadHtml} className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700" style={{ background: '#1348E5', outline: 'none' }}>
+            <button onClick={downloadHtml} className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700" style={{ background: '#1348E5', outline: 'none', color: 'white' }}>
               Download HTML
             </button>
           </div>
